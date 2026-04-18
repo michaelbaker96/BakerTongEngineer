@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BakerTongEngineer
 
-## Getting Started
+Single-page editorial portfolio for Michael Baker-Tong. The site is built as a recruiter-facing summary of engineering experience, selected projects, and contact links.
 
-First, run the development server:
+GitHub repository: <https://github.com/michaelbaker96/BakerTongEngineer>
+
+## What the site includes
+
+The current public page includes these implemented sections:
+
+- Hero
+- Selected Work
+- Engineering Highlights
+- Work Experience
+- Contact
+
+## Stack
+
+- Next.js App Router
+- Tailwind CSS 4
+- Vitest
+- Playwright
+
+## Local development
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+3. Open `http://localhost:3000`.
+
+Optional turbo mode for local development:
+
+```bash
+npm run dev:turbo
+```
+
+## Available npm scripts
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev:turbo
+npm run build
+npm run start
+npm run lint
+npm run test
+npm run test:watch
+npm run test:ui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Validation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Use these commands before shipping changes:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run test
+npx playwright test
+npm run build
+```
 
-## Learn More
+Notes:
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run test` runs the Vitest suite.
+- `npx playwright test` runs the end-to-end browser checks.
+- `npm run test:ui` builds the app and then runs Playwright in one command.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Vercel deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is ready to import into Vercel from:
 
-## Deploy on Vercel
+<https://github.com/michaelbaker96/BakerTongEngineer>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Recommended setup:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Import the repository into Vercel.
+2. Use the default Next.js build settings.
+3. Set `NEXT_PUBLIC_SITE_URL` to the production site URL.
+
+The app metadata uses `metadataBase` with this fallback order:
+
+1. `NEXT_PUBLIC_SITE_URL`
+2. `SITE_URL`
+3. `http://localhost:3000`
+
+That ensures canonical and social metadata resolve correctly in production while still working locally if no deployment URL is set.
