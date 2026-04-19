@@ -723,6 +723,131 @@ a {
   transform: translateY(-1px);
 }
 
+.project-card--visual-forward {
+  position: relative;
+  min-height: 650px;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  background: var(--ink-strong);
+}
+
+.project-card__bg-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(1.05) brightness(0.8);
+}
+
+.project-card__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
+}
+
+.project-card__immersive-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(var(--space-8), 6vw, var(--space-16));
+}
+
+.project-card__main-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-12);
+}
+
+.project-card__identity {
+  flex: 1;
+}
+
+.project-card__glass-panel {
+  flex: 0 0 320px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-8);
+  border-radius: var(--radius-panel);
+  display: grid;
+  gap: var(--space-6);
+}
+
+.project-card--visual-forward .project-card__title {
+  color: white;
+  font-size: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+  line-height: 0.95;
+}
+
+.project-card--visual-forward .project-card__summary {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--text-lead);
+  margin-top: var(--space-4);
+}
+
+.project-card--visual-forward .project-card__detail-label {
+  color: var(--accent-bronze);
+}
+
+.project-card--visual-forward .project-card__detail-copy {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.project-card--visual-forward .project-card__link {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.project-card--visual-forward .project-card__link:hover {
+  background: white;
+  color: var(--ink-strong);
+  border-color: white;
+}
+
+@media (max-width: 64rem) {
+  .project-card__main-layout {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+  
+  .project-card__glass-panel {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 48rem) {
+  .project-card--visual-forward {
+    min-height: auto;
+  }
+  
+  .project-card__immersive-content {
+    position: static;
+    padding: var(--space-6);
+  }
+  
+  .project-card__bg-image {
+    position: relative;
+    height: 250px;
+    inset: auto;
+  }
+}
+
 .contact-section__link:hover,
 .contact-section__link:focus-visible {
   border-color: color-mix(in srgb, var(--accent-bronze) 35%, transparent);
