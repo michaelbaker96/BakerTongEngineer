@@ -28,8 +28,8 @@ describe("portfolio content", () => {
     expect(hero.role.text).toBe("Senior Software Engineer");
     expect(hero.summary.text).toContain("scalable cloud architecture");
     expect(hero.summary.text).toContain("distributed systems");
-    expect(hero.summary.text).toContain("AI-enabled data platforms");
-    expect(hero.summary.text).toContain("full-stack delivery");
+    expect(hero.summary.text).toContain("AI-powered data platforms");
+    expect(hero.summary.text).toContain("end-to-end delivery");
     expect(hero.signals.map((signal) => signal.text)).toEqual([
       "Scalable cloud architecture",
       "Distributed systems",

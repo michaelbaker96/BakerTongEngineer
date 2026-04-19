@@ -10,7 +10,7 @@ export function HighlightsSection() {
             Highlights
           </h2>
           <p className="highlights-section__lede">
-            Recruiter-facing capability pillars grounded in the public resume and project record.
+            These are the capability pillars I keep coming back to across my resume and project work.
           </p>
         </div>
 

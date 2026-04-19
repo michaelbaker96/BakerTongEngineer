@@ -39,7 +39,7 @@ test("homepage exports recruiter metadata, stable anchors, and a real contact se
   ).toBeVisible();
   await expect(
     page.getByText(
-      "Senior Software Engineer specialising in scalable cloud architecture, distributed systems, AI-enabled data platforms, and full-stack delivery."
+      "I'm a Senior Software Engineer, and most of my work sits around scalable cloud architecture, distributed systems, AI-powered data platforms, and end-to-end delivery."
     )
   ).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Primary" })).toBeVisible();
@@ -168,7 +168,7 @@ test("homepage shell stays within a narrow mobile viewport", async ({ page }) =>
   expect(headingBox!.y).toBeLessThan(390);
 });
 
-test("selected work shows only the approved featured projects with verified links and no media creep", async ({ page }) => {
+test("selected work shows only the approved featured projects with verified links and landing page screenshots", async ({ page }) => {
   await page.goto("/");
 
   const featuredProjects = page.getByRole("list", { name: "Featured projects" });
@@ -197,7 +197,19 @@ test("selected work shows only the approved featured projects with verified link
     "https://aus-export-tracker.vercel.app"
   );
 
-  await expect(featuredProjects.locator("img, video")).toHaveCount(0);
+  await expect(
+    letterboxdCard.getByRole("img", {
+      name: "Letterboxd Trivia Battle landing page screenshot",
+    })
+  ).toHaveAttribute("src", "/letterboxd-trivia-battle.png");
+  await expect(
+    ausExportTrackerCard.getByRole("img", {
+      name: "Aus Export Tracker landing page screenshot",
+    })
+  ).toHaveAttribute("src", "/aus-export-tracker.png");
+
+  await expect(featuredProjects.locator("img")).toHaveCount(2);
+  await expect(featuredProjects.locator("video")).toHaveCount(0);
 
   const showcaseText = await featuredProjects.innerText();
 

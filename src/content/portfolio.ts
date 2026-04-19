@@ -13,6 +13,7 @@ export type SourceId =
   | "linkedinProfile"
   | "email"
   | "letterboxdRepo"
+  | "letterboxdLive"
   | "ausExportTrackerRepo"
   | "ausExportTrackerLive";
 
@@ -42,6 +43,11 @@ export type ProjectLink = {
   sourceId: SourceId;
 };
 
+export type ProjectScreenshot = {
+  src: string;
+  alt: string;
+};
+
 export type ProjectEntry = {
   id: string;
   title: string;
@@ -50,6 +56,7 @@ export type ProjectEntry = {
   approach: readonly Claim[];
   highlights: readonly Claim[];
   links: readonly ProjectLink[];
+  screenshot: ProjectScreenshot;
 };
 
 export type HighlightEntry = {
@@ -122,6 +129,11 @@ export const sourceCatalog: Record<SourceId, SourceReference> = {
     label: "Letterboxd Trivia Battle repository",
     href: "https://github.com/michaelbaker96/letterboxd-trivia-battle",
   },
+  letterboxdLive: {
+    id: "letterboxdLive",
+    label: "Letterboxd Trivia Battle live app",
+    href: "https://letterboxd-trivia-battle.vercel.app/",
+  },
   ausExportTrackerRepo: {
     id: "ausExportTrackerRepo",
     label: "Aus Export Tracker repository",
@@ -140,7 +152,7 @@ export const hero: HeroContent = {
   role: claim("hero.role", "Senior Software Engineer", ["resumePdf", "linkedinProfile"]),
   summary: claim(
     "hero.summary",
-    "Senior Software Engineer specialising in scalable cloud architecture, distributed systems, AI-enabled data platforms, and full-stack delivery.",
+    "I'm a Senior Software Engineer, and most of my work sits around scalable cloud architecture, distributed systems, AI-powered data platforms, and end-to-end delivery.",
     ["resumePdf"]
   ),
   signals: [
@@ -157,13 +169,13 @@ export const selectedWork: readonly ProjectEntry[] = [
     title: "Letterboxd Trivia Battle",
     summary: claim(
       "selected-work.letterboxd.summary",
-      "Multiplayer film-trivia experience built around Letterboxd history uploads.",
-      ["letterboxdRepo"]
+      "I built this multiplayer film-trivia experience around Letterboxd history uploads.",
+      ["letterboxdRepo", "letterboxdLive"]
     ),
     whyItMatters: claim(
       "selected-work.letterboxd.why-it-matters",
-      "Turns a Letterboxd export into a fast create-or-join room flow with AI-host banter and live score reveals.",
-      ["letterboxdRepo"]
+      "I wanted a Letterboxd export to feel fun straight away, so I turned it into a fast create-or-join room flow with AI-host banter and live score reveals.",
+      ["letterboxdRepo", "letterboxdLive"]
     ),
     approach: [
       claim(
@@ -185,18 +197,18 @@ export const selectedWork: readonly ProjectEntry[] = [
     highlights: [
       claim(
         "selected-work.letterboxd.fast-lobby",
-        "Fast lobby setup supports create and join flows.",
+        "I built the lobby flow to feel quick whether you're creating a room or jumping into one.",
         ["letterboxdRepo"]
       ),
       claim(
         "selected-work.letterboxd.real-time-scoring",
-        "Gameplay includes real-time scoring.",
-        ["letterboxdRepo"]
+        "I added real-time scoring to the gameplay loop.",
+        ["letterboxdRepo", "letterboxdLive"]
       ),
       claim(
         "selected-work.letterboxd.ai-host",
-        "The experience is framed with a sassy AI host persona.",
-        ["letterboxdRepo"]
+        "I framed the experience around a sassy AI host persona.",
+        ["letterboxdRepo", "letterboxdLive"]
       ),
     ],
     links: [
@@ -205,19 +217,28 @@ export const selectedWork: readonly ProjectEntry[] = [
         href: sourceCatalog.letterboxdRepo.href,
         sourceId: "letterboxdRepo",
       },
+      {
+        label: "Live",
+        href: sourceCatalog.letterboxdLive.href,
+        sourceId: "letterboxdLive",
+      },
     ],
+    screenshot: {
+      src: "/letterboxd-trivia-battle.png",
+      alt: "Letterboxd Trivia Battle landing page screenshot",
+    },
   },
   {
     id: "aus-export-tracker",
     title: "Aus Export Tracker",
     summary: claim(
       "selected-work.aus-export.summary",
-      "Interactive map visualising Australia's natural resource export flows.",
+      "I built this interactive map to make Australia's natural resource export flows easier to explore.",
       ["ausExportTrackerRepo", "ausExportTrackerLive"]
     ),
     whyItMatters: claim(
       "selected-work.aus-export.why-it-matters",
-      "Pairs route, destination, and year filters with a public map interface for scanning Australian export flows.",
+      "I paired route, destination, and year filters with a public map interface so people can scan Australian export flows without digging through spreadsheets first.",
       ["ausExportTrackerRepo", "ausExportTrackerLive"]
     ),
     approach: [
@@ -240,12 +261,12 @@ export const selectedWork: readonly ProjectEntry[] = [
     highlights: [
       claim(
         "selected-work.aus-export.github",
-        "Source code is published in a public GitHub repository.",
+        "I published the source code in a public GitHub repository.",
         ["ausExportTrackerRepo"]
       ),
       claim(
         "selected-work.aus-export.live",
-        "A live public deployment is available on Vercel.",
+        "I shipped a live public deployment on Vercel.",
         ["ausExportTrackerLive"]
       ),
     ],
@@ -261,6 +282,10 @@ export const selectedWork: readonly ProjectEntry[] = [
         sourceId: "ausExportTrackerLive",
       },
     ],
+    screenshot: {
+      src: "/aus-export-tracker.png",
+      alt: "Aus Export Tracker landing page screenshot",
+    },
   },
 ] as const;
 
@@ -268,9 +293,9 @@ export const engineeringHighlights: readonly HighlightEntry[] = [
   {
     id: "highlights.cloud-distributed-systems",
     title: "Cloud & Distributed Systems",
-    description: claim(
+  description: claim(
       "highlights.cloud-distributed-systems.description",
-      "Designs scalable cloud architecture, distributed systems, and event-driven microservices for enterprise platforms.",
+      "I spend a lot of my time designing scalable cloud architectures, distributed systems, and event-driven microservices for enterprise platforms.",
       ["resumePdf"]
     ),
     keywords: [
@@ -291,9 +316,9 @@ export const engineeringHighlights: readonly HighlightEntry[] = [
   {
     id: "highlights.data-ai-platforms",
     title: "Data & AI Platforms",
-    description: claim(
+  description: claim(
       "highlights.data-ai-platforms.description",
-      "Builds AI-enabled data platforms with ingestion, validation, and transformation workflows for structured datasets.",
+      "I build AI-powered data platforms, especially where ingestion, validation, and transformation workflows need to be reliable at scale.",
       ["resumePdf"]
     ),
     keywords: [
@@ -322,7 +347,7 @@ export const engineeringHighlights: readonly HighlightEntry[] = [
     title: "Full-Stack Product Delivery",
     description: claim(
       "highlights.full-stack-product-delivery.description",
-      "Delivers full-stack product work across backend, frontend, infrastructure, and public web interfaces.",
+      "I like working across the full stack, from backend and frontend through to infrastructure and public-facing web interfaces.",
       ["resumePdf"]
     ),
     keywords: [
@@ -349,9 +374,9 @@ export const engineeringHighlights: readonly HighlightEntry[] = [
   {
     id: "highlights.reliability-observability",
     title: "Reliability & Observability",
-    description: claim(
+  description: claim(
       "highlights.reliability-observability.description",
-      "Improves reliability and performance through monitoring, tracing, logging, schema validation, and typing discipline.",
+      "I usually improve reliability and performance by tightening up monitoring, tracing, logging, schema validation, and typing along the way.",
       ["resumePdf"]
     ),
     keywords: [
@@ -380,9 +405,9 @@ export const engineeringHighlights: readonly HighlightEntry[] = [
   {
     id: "highlights.discovery-leadership",
     title: "Technical Discovery & Cross-Functional Leadership",
-    description: claim(
+  description: claim(
       "highlights.discovery-leadership.description",
-      "Leads cross-functional discovery and delivery while shaping API and transformation workflows for complex systems.",
+      "I work closely across functions during discovery and delivery, especially when API and transformation workflows need to stay clear through a lot of complexity.",
       ["resumePdf"]
     ),
     keywords: [
@@ -418,23 +443,23 @@ export const workExperience: readonly ExperienceEntry[] = [
     period: "2022–2026",
     summary: claim(
       "experience.faethm.summary",
-      "Led design and delivery of enterprise data ingestion and processing systems for high-volume structured datasets.",
+      "At Faethm, I led the design and delivery of enterprise data ingestion and processing systems for high-volume structured datasets.",
       ["resumePdf"]
     ),
     highlights: [
       claim(
         "experience.faethm.microservices",
-        "Architected and maintained event-driven microservices using Node.js, TypeScript, and AWS-based infrastructure.",
+        "I architected and maintained event-driven microservices using Node.js, TypeScript, and AWS-based infrastructure.",
         ["resumePdf"]
       ),
       claim(
         "experience.faethm.validation",
-        "Built validation and transformation pipelines and strengthened schema validation and typing strategies.",
+        "I built validation and transformation pipelines and tightened up the schema validation and typing strategy around them.",
         ["resumePdf"]
       ),
       claim(
         "experience.faethm.observability",
-        "Improved observability and performance through monitoring, tracing, and logging practices.",
+        "I improved observability and performance through monitoring, tracing, and logging practices.",
         ["resumePdf"]
       ),
     ],
@@ -446,18 +471,18 @@ export const workExperience: readonly ExperienceEntry[] = [
     period: "2021",
     summary: claim(
       "experience.cba.summary",
-      "Developed secure backend services and financial data processing applications in regulated environments.",
+      "At Commonwealth Bank, I developed secure backend services and financial data processing applications in a regulated environment.",
       ["resumePdf"]
     ),
     highlights: [
       claim(
         "experience.cba.backend-services",
-        "Built secure backend services for financial data processing workflows in a regulated environment.",
+        "I built secure backend services for financial data processing workflows in a regulated environment.",
         ["resumePdf"]
       ),
       claim(
         "experience.cba.apis",
-        "Contributed to internal API ecosystems supporting transaction and transformation workflows.",
+        "I contributed to internal API ecosystems supporting transaction and transformation workflows.",
         ["resumePdf"]
       ),
     ],
@@ -469,18 +494,18 @@ export const workExperience: readonly ExperienceEntry[] = [
     period: "2020–2021",
     summary: claim(
       "experience.energy-action.summary",
-      "Architected a web-based invoice management and analytics platform across backend, frontend, and infrastructure.",
+      "At Energy Action, I architected a web-based invoice management and analytics platform across backend, frontend, and infrastructure.",
       ["resumePdf"]
     ),
     highlights: [
       claim(
         "experience.energy-action.cloud",
-        "Managed cloud-hosted infrastructure and internal deployment pipelines.",
+        "I managed cloud-hosted infrastructure and internal deployment pipelines.",
         ["resumePdf"]
       ),
       claim(
         "experience.energy-action.ai",
-        "Implemented AI-assisted document processing and classification solutions.",
+        "I implemented AI-assisted document processing and classification solutions.",
         ["resumePdf"]
       ),
     ],
@@ -492,18 +517,18 @@ export const workExperience: readonly ExperienceEntry[] = [
     period: "2018–2020",
     summary: claim(
       "experience.pooled-energy.summary",
-      "Designed and developed RESTful APIs and integration systems spanning backend services, infrastructure, and IoT-adjacent environments.",
+      "At Pooled Energy, I designed and developed RESTful APIs and integration systems that spanned backend services, infrastructure, and IoT-adjacent environments.",
       ["resumePdf"]
     ),
     highlights: [
       claim(
         "experience.pooled-energy.control-systems",
-        "Built distributed control systems interacting with residential IoT-adjacent environments.",
+        "I built distributed control systems interacting with residential IoT-adjacent environments.",
         ["resumePdf"]
       ),
       claim(
         "experience.pooled-energy.financial-tools",
-        "Developed financial data extraction and templating tools to improve operational efficiency.",
+        "I developed financial data extraction and templating tools to improve operational efficiency.",
         ["resumePdf"]
       ),
     ],

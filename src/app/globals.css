@@ -730,6 +730,11 @@ a {
   padding: 0;
   border: none;
   background: var(--ink-strong);
+  transition: transform var(--transition-soft);
+}
+
+.project-card--visual-forward:hover .project-card__bg-image {
+  transform: scale(1.05);
 }
 
 .project-card__bg-image {
@@ -739,6 +744,7 @@ a {
   object-fit: cover;
   object-position: center;
   filter: contrast(1.05) brightness(0.8);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-card__overlay {
@@ -747,8 +753,9 @@ a {
   z-index: 1;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    rgba(0, 0, 0, 0.2) 70%,
     transparent 100%
   );
 }
@@ -775,47 +782,63 @@ a {
 }
 
 .project-card__glass-panel {
-  flex: 0 0 320px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex: 0 0 340px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: var(--space-8);
   border-radius: var(--radius-panel);
   display: grid;
   gap: var(--space-6);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.3);
 }
 
 .project-card--visual-forward .project-card__title {
   color: white;
   font-size: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
   line-height: 0.95;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .project-card--visual-forward .project-card__summary {
   color: rgba(255, 255, 255, 0.9);
   font-size: var(--text-lead);
   margin-top: var(--space-4);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .project-card--visual-forward .project-card__detail-label {
   color: var(--accent-bronze);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
 }
 
 .project-card--visual-forward .project-card__detail-copy {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
 }
 
 .project-card--visual-forward .project-card__link {
   background: rgba(255, 255, 255, 0.1);
   color: white;
   border-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
 }
 
 .project-card--visual-forward .project-card__link:hover {
   background: white;
   color: var(--ink-strong);
   border-color: white;
+  transform: translateY(-2px);
+}
+
+.project-card--visual-forward .project-card__approach-item {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.15);
+  font-size: 0.8125rem;
+  min-height: 2.25rem;
 }
 
 @media (max-width: 64rem) {
