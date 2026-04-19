@@ -62,6 +62,14 @@ describe("Home", () => {
     expect(
       within(letterboxdCard).getByRole("link", { name: "GitHub" })
     ).toHaveAttribute("href", sourceCatalog.letterboxdRepo.href);
+    expect(
+      within(letterboxdCard).getByRole("link", { name: "Live" })
+    ).toHaveAttribute("href", sourceCatalog.letterboxdLive.href);
+    expect(
+      within(letterboxdCard).getByRole("img", {
+        name: selectedWork[0].screenshot.alt,
+      }).getAttribute("src")
+    ).toContain(encodeURIComponent(selectedWork[0].screenshot.src));
 
     expect(within(ausExportTrackerCard).getByText("Why it matters")).toBeInTheDocument();
     expect(
@@ -70,8 +78,14 @@ describe("Home", () => {
     expect(
       within(ausExportTrackerCard).getByRole("link", { name: "Live" })
     ).toHaveAttribute("href", sourceCatalog.ausExportTrackerLive.href);
+    expect(
+      within(ausExportTrackerCard).getByRole("img", {
+        name: selectedWork[1].screenshot.alt,
+      }).getAttribute("src")
+    ).toContain(encodeURIComponent(selectedWork[1].screenshot.src));
 
-    expect(featuredProjects.querySelectorAll("img, video")).toHaveLength(0);
+    expect(featuredProjects.querySelectorAll("img")).toHaveLength(2);
+    expect(featuredProjects.querySelectorAll("video")).toHaveLength(0);
     expect(featuredProjects).not.toHaveTextContent(/\b(users?|downloads?)\b|%/i);
   });
 });
