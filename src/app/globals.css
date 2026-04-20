@@ -1,3 +1,4 @@
+/* Ahoy! These be the global styles for our grand voyage, guidin' the look and feel of our ship across the vast digital seas! */
 @import "tailwindcss";
 
 :root {
@@ -815,9 +816,9 @@ a {
 
 .project-card__media {
   flex: 1.2;
-  background: var(--bg-surface-soft, #f0f0f2);
+  background: var(--paper-panel);
   aspect-ratio: 16/10;
-  border-radius: var(--radius-lg, 12px);
+  border-radius: var(--radius-panel);
   padding: clamp(1rem, 3vw, 3rem);
   display: flex;
   align-items: center;
@@ -832,9 +833,9 @@ a {
   width: 100%;
   height: 100%;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-  border-radius: var(--radius-md, 6px);
+  border-radius: calc(var(--radius-panel) / 2);
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--rule-subtle);
 }
 
 .project-card__content {
@@ -842,10 +843,10 @@ a {
 }
 
 .project-card__eyebrow {
-  font-size: 0.75rem;
+  font-size: var(--text-meta);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--text-tertiary);
+  color: var(--accent-charcoal);
   margin-bottom: var(--space-2);
 }
 
@@ -858,16 +859,16 @@ a {
 }
 
 .project-card__summary {
-  font-size: var(--text-base);
+  font-size: var(--text-body);
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--ink-muted);
   margin-bottom: var(--space-8);
 }
 
 .project-card__details {
   display: grid;
   gap: var(--space-6);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--rule-subtle);
   padding-top: var(--space-6);
 }
 
@@ -881,7 +882,7 @@ a {
 
 .project-card__detail-copy {
   font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: var(--ink-muted);
   line-height: 1.5;
 }
 
@@ -894,9 +895,9 @@ a {
 }
 
 .project-card__approach-item {
-  font-size: 0.75rem;
+  font-size: var(--text-meta);
   padding: 0.25rem 0.5rem;
-  background: var(--bg-surface-soft);
+  background: var(--paper-panel);
   border-radius: 4px;
 }
 

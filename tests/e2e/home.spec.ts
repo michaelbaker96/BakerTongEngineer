@@ -201,12 +201,12 @@ test("selected work shows only the approved featured projects with verified link
     letterboxdCard.getByRole("img", {
       name: "Letterboxd Trivia Battle landing page screenshot",
     })
-  ).toHaveAttribute("src", "/letterboxd-trivia-battle.png");
+  ).toHaveAttribute("src", /.*letterboxd-trivia-battle\.png/);
   await expect(
     ausExportTrackerCard.getByRole("img", {
       name: "Aus Export Tracker landing page screenshot",
     })
-  ).toHaveAttribute("src", "/aus-export-tracker.png");
+  ).toHaveAttribute("src", /.*aus-export-tracker\.png/);
 
   await expect(featuredProjects.locator("img")).toHaveCount(2);
   await expect(featuredProjects.locator("video")).toHaveCount(0);

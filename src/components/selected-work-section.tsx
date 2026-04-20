@@ -5,7 +5,7 @@ import { selectedWork } from "@/content/portfolio";
 
 export function SelectedWorkSection() {
   return (
-    <section aria-labelledby="selected-work-heading" id="work" className="selected-work-section">
+    <section aria-labelledby="selected-work-heading" className="selected-work-section">
       <div className="selected-work-section__intro">
         <p className="selected-work-section__eyebrow">Case studies</p>
         <h2 className="selected-work-section__heading" id="selected-work-heading">
