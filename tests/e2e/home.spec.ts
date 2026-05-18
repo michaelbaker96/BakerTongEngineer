@@ -262,10 +262,10 @@ test("experience renders exact roles in order with inline education and no separ
   await expect(experienceList).toBeVisible();
   await expect(experienceCards).toHaveCount(4);
   await expect(experienceList.getByRole("heading", { level: 3 })).toHaveText([
-    "Senior Software Engineer — Faethm by Pearson (2022–2026)",
-    "Software Engineer — Commonwealth Bank (2021)",
-    "Software Engineer — Energy Action (2020–2021)",
-    "Software Engineer — Pooled Energy (2018–2020)",
+    "Faethm by Pearson",
+    "Commonwealth Bank",
+    "Energy Action",
+    "Pooled Energy",
   ]);
 
   for (let index = 0; index < 4; index += 1) {

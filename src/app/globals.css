@@ -13,6 +13,7 @@
   --rule-subtle: color-mix(in srgb, var(--accent-charcoal) 16%, transparent);
   --background: var(--paper-base);
   --foreground: var(--ink-strong);
+  --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
@@ -97,13 +98,13 @@ a {
   background-image:
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--paper-soft) 92%, transparent),
-      var(--paper-base)
+      color-mix(in srgb, var(--paper-soft) 94%, transparent),
+      var(--paper-base) 55%
     ),
     radial-gradient(
-      circle at top right,
-      color-mix(in srgb, var(--paper-deep) 62%, transparent),
-      transparent 36%
+      ellipse 75% 55% at 100% 0%,
+      color-mix(in srgb, var(--paper-deep) 88%, var(--accent-bronze)),
+      transparent 70%
     );
 }
 
@@ -138,8 +139,7 @@ a {
 .editorial-nav__link,
 .editorial-anchor__eyebrow,
 .selected-work-section__eyebrow,
-.project-card__eyebrow,
-.project-card__detail-label {
+.project-card__eyebrow {
   color: var(--accent-charcoal);
   font-size: var(--text-meta);
   letter-spacing: var(--letterspace-meta);
@@ -291,6 +291,7 @@ a {
 .experience-section__intro,
 .experience-card,
 .experience-card__content,
+.experience-card__heading-block,
 .experience-section__education {
   display: grid;
 }
@@ -414,15 +415,33 @@ a {
   max-width: 18ch;
 }
 
-.experience-card__heading {
+.experience-card__heading-block {
+  gap: var(--space-2);
+}
+
+.experience-card__period {
+  color: var(--accent-bronze);
+  font-size: var(--text-meta);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.experience-card__company {
   color: var(--ink-strong);
   font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(1.5rem, 1.25rem + 0.95vw, 2.125rem);
+  font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.25rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: var(--line-tight);
   margin: 0;
-  max-width: 24ch;
+}
+
+.experience-card__title-label {
+  color: var(--ink-muted);
+  font-size: var(--text-signal);
+  margin: 0;
 }
 
 .highlights-card__summary {
@@ -872,12 +891,24 @@ a {
   padding-top: var(--space-6);
 }
 
+/* The generic .project-card__detail has its own border-top — cancel it in the editorial layout
+   since the container already provides the visual separator */
+.project-card--editorial .project-card__detail {
+  border-top: none;
+  padding-top: 0;
+}
+
+.project-card__actions {
+  margin-top: var(--space-6);
+}
+
 .project-card__detail-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  font-weight: 700;
   color: var(--accent-bronze);
-  margin-bottom: var(--space-1);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 var(--space-1);
+  text-transform: uppercase;
 }
 
 .project-card__detail-copy {
@@ -895,10 +926,14 @@ a {
 }
 
 .project-card__approach-item {
-  font-size: var(--text-meta);
-  padding: 0.25rem 0.5rem;
-  background: var(--paper-panel);
-  border-radius: 4px;
+  align-items: center;
+  background: color-mix(in srgb, var(--paper-soft) 92%, transparent);
+  border: 1px solid var(--rule-subtle);
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  font-size: var(--text-signal);
+  min-height: 2.25rem;
+  padding-inline: var(--space-4);
 }
 
 /* Responsive adjustments */
@@ -924,6 +959,11 @@ a {
 @media (min-width: 48.0625rem) {
   .highlights-section__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Span the last card full-width when it would be alone on its row (odd count) */
+  .highlights-section__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   .experience-section__education-row {
@@ -957,7 +997,15 @@ a {
   }
 
   .editorial-nav__list {
+    flex-wrap: nowrap;
     justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: var(--space-1);
+    scrollbar-width: none;
+  }
+
+  .editorial-nav__list::-webkit-scrollbar {
+    display: none;
   }
 
   .work-page {
@@ -975,6 +1023,152 @@ a {
   }
 }
 
+/* ─── Project card detail alignment ──────────────────────────────────────── */
+
+/* Don't let the summary's margin-bottom stack with grid gap + details padding */
+.project-card--editorial .project-card__summary {
+  margin-bottom: 0;
+}
+
+.project-card--editorial .project-card__details {
+  align-items: start;
+}
+
+/* ─── Footer ──────────────────────────────────────────────────────────────── */
+
+.editorial-footer {
+  border-top: 1px solid var(--rule-subtle);
+  background: color-mix(in srgb, var(--paper-deep) 35%, var(--paper-base));
+}
+
+.editorial-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--space-16);
+  padding-block: var(--space-5);
+}
+
+.editorial-footer__brand {
+  color: var(--accent-charcoal);
+  font-size: var(--text-meta);
+  letter-spacing: var(--letterspace-meta);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.editorial-footer__copy {
+  color: var(--ink-muted);
+  font-size: var(--text-meta);
+  margin: 0;
+}
+
+/* ─── Entrance animations ─────────────────────────────────────────────────── */
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-section__role {
+  animation: fadeSlideUp 0.5s ease both;
+  animation-delay: 0.05s;
+}
+
+.hero-section__heading {
+  animation: fadeSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.12s;
+}
+
+.hero-section__summary {
+  animation: fadeSlideUp 0.5s ease both;
+  animation-delay: 0.22s;
+}
+
+.hero-section__actions {
+  animation: fadeSlideUp 0.5s ease both;
+  animation-delay: 0.32s;
+}
+
+.hero-section__signals {
+  animation: fadeSlideUp 0.5s ease both;
+  animation-delay: 0.42s;
+}
+
+/* ─── Contact link arrow ──────────────────────────────────────────────────── */
+
+.contact-section__link::after {
+  content: "→";
+  color: var(--accent-bronze);
+  font-size: 1.25rem;
+  opacity: 0.4;
+  transition:
+    opacity var(--transition-soft),
+    transform var(--transition-soft);
+}
+
+.contact-section__link:hover::after,
+.contact-section__link:focus-visible::after {
+  opacity: 1;
+  transform: translateX(0.25rem);
+}
+
+/* ─── Project card media hover ────────────────────────────────────────────── */
+
+.project-card__media-inner img {
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card--editorial:hover .project-card__media-inner img {
+  transform: scale(1.04);
+}
+
+/* ─── Hero two-column layout ──────────────────────────────────────────────── */
+
+@media (min-width: 64rem) {
+  .hero-section {
+    grid-template-columns: 1fr minmax(0, 26rem);
+    align-items: start;
+    column-gap: clamp(var(--space-10), 6vw, var(--space-16));
+    row-gap: 0;
+  }
+
+  .hero-section__signals {
+    border-top: none;
+    border-left: 1px solid var(--rule-subtle);
+    max-width: none;
+    padding-left: clamp(var(--space-8), 4vw, var(--space-12));
+    padding-top: 0;
+  }
+
+  .hero-section__signal-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-section__signal {
+    font-size: var(--text-body);
+  }
+}
+
+/* ─── Highlights 3-col at wide viewports ─────────────────────────────────── */
+
+@media (min-width: 80rem) {
+  .highlights-section__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Reset the full-width span — 5 cards fit as [1,2,3][4,5,_] in 3 cols */
+  .highlights-section__item:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -984,7 +1178,17 @@ a {
   .editorial-nav__link::after,
   .hero-section__action-link,
   .project-card__link,
-  .contact-section__link {
+  .contact-section__link,
+  .contact-section__link::after,
+  .project-card__media-inner img {
     transition: none;
+  }
+
+  .hero-section__role,
+  .hero-section__heading,
+  .hero-section__summary,
+  .hero-section__actions,
+  .hero-section__signals {
+    animation: none;
   }
 }

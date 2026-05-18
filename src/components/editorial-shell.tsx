@@ -20,9 +20,6 @@ const contactAccessibleLabels = {
   email: "Email Michael Baker-Tong",
 } as const;
 
-const formatRoleHeading = (title: string, company: string, period: string) =>
-  `${title} — ${company} (${period})`;
-
 export function EditorialShell({ children }: EditorialShellProps) {
   return (
     <div className="editorial-shell">
@@ -76,9 +73,11 @@ export function EditorialShell({ children }: EditorialShellProps) {
                   <li className="experience-section__item" key={role.id}>
                     <article aria-labelledby={titleId} className="experience-card">
                       <div className="experience-card__content">
-                        <h3 className="experience-card__heading" id={titleId}>
-                          {formatRoleHeading(role.title, role.company, role.period)}
-                        </h3>
+                        <div className="experience-card__heading-block">
+                          <p className="experience-card__period">{role.period}</p>
+                          <h3 className="experience-card__company" id={titleId}>{role.company}</h3>
+                          <p className="experience-card__title-label">{role.title}</p>
+                        </div>
                         <p className="experience-card__summary">{role.summary.text}</p>
                       </div>
 
@@ -97,7 +96,7 @@ export function EditorialShell({ children }: EditorialShellProps) {
 
             {inlineEducation ? (
               <div className="experience-section__education">
-                <p className="project-card__detail-label">Education</p>
+                <p className="editorial-anchor__eyebrow">Education</p>
                 <div className="experience-section__education-row">
                   <p className="experience-section__education-institution">{inlineEducation.institution}</p>
                   <p className="experience-section__education-degree">{inlineEducation.degree}</p>
@@ -138,6 +137,13 @@ export function EditorialShell({ children }: EditorialShellProps) {
           </div>
         </section>
       </div>
+
+      <footer className="editorial-footer">
+        <div className="editorial-frame editorial-footer__inner">
+          <p className="editorial-footer__brand">BakerTongEngineer</p>
+          <p className="editorial-footer__copy">© 2026 Michael Baker-Tong</p>
+        </div>
+      </footer>
     </div>
   );
 }

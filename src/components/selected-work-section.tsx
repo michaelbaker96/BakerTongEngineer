@@ -70,7 +70,7 @@ export function SelectedWorkSection() {
                       </ul>
                     </div>
 
-                    <div className="project-card__actions mt-6">
+                    <div className="project-card__actions">
                       <ul aria-label={`${project.title} links`} className="project-card__link-list">
                         {project.links.map((link) => (
                           <li key={link.href}>
