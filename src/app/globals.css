@@ -836,7 +836,7 @@ a {
 .project-card__media {
   flex: 1.2;
   background: var(--paper-panel);
-  aspect-ratio: 16/10;
+  aspect-ratio: 2 / 1;
   border-radius: var(--radius-panel);
   padding: clamp(1rem, 3vw, 3rem);
   display: flex;
