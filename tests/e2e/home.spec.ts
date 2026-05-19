@@ -216,7 +216,7 @@ test("selected work shows only the approved featured projects with verified link
   expect(showcaseText).not.toMatch(/\b(users?|downloads?|screenshots?)\b|%/i);
 });
 
-test("engineering highlights renders five ordered capability pillars without keyword sprawl", async ({ page }) => {
+test("engineering highlights renders five ordered capability pillars without a keywords block", async ({ page }) => {
   await page.goto("/");
 
   const highlightsSection = page.locator("#highlights");
@@ -236,15 +236,13 @@ test("engineering highlights renders five ordered capability pillars without key
 
   for (let index = 0; index < 5; index += 1) {
     const card = highlightCards.nth(index);
-    const keywordItems = card.getByRole("listitem");
-    const keywordCount = await keywordItems.count();
 
     await expect(card.locator(".highlights-card__summary")).toHaveCount(1);
-    expect(keywordCount).toBeGreaterThanOrEqual(2);
-    expect(keywordCount).toBeLessThanOrEqual(4);
+    await expect(card.getByRole("listitem")).toHaveCount(0);
     await expect(card).not.toContainText(/Certification|Award|0410966572|0410 966 572/i);
   }
 
+  await expect(highlightsSection).not.toContainText("Verified keywords");
   await expect(highlightsSection).not.toContainText("Certification");
   await expect(highlightsSection).not.toContainText("Award");
   await expect(highlightsSection).not.toContainText("0410966572");
@@ -262,18 +260,27 @@ test("experience renders exact roles in order with inline education and no separ
   await expect(experienceList).toBeVisible();
   await expect(experienceCards).toHaveCount(4);
   await expect(experienceList.getByRole("heading", { level: 3 })).toHaveText([
-    "Faethm by Pearson",
-    "Commonwealth Bank",
-    "Energy Action",
-    "Pooled Energy",
+    "Senior Software Engineer — Faethm by Pearson (2022–2026)",
+    "Software Engineer — Commonwealth Bank (2021)",
+    "Software Engineer — Energy Action (2020–2021)",
+    "Software Engineer — Pooled Energy (2018–2020)",
   ]);
+
+  const companies = ["Faethm by Pearson", "Commonwealth Bank", "Energy Action", "Pooled Energy"];
 
   for (let index = 0; index < 4; index += 1) {
     const card = experienceCards.nth(index);
-    const bulletCount = await card.getByRole("listitem").count();
+    const bulletCount = await card
+      .getByRole("list", { name: `${companies[index]} highlights` })
+      .getByRole("listitem")
+      .count();
 
     expect(bulletCount).toBeGreaterThanOrEqual(2);
     expect(bulletCount).toBeLessThanOrEqual(3);
+
+    await expect(
+      card.getByRole("list", { name: `${companies[index]} tech stack` })
+    ).toBeVisible();
   }
 
   await expect(experienceSection.getByText("Macquarie University", { exact: true })).toBeVisible();
@@ -285,4 +292,46 @@ test("experience renders exact roles in order with inline education and no separ
   await expect(experienceSection.getByText("2014–2017", { exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Education" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 2, name: "Education" })).toHaveCount(0);
+});
+
+test("technical skills section renders categorized concrete skills reachable from the nav", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Skills" })).toHaveAttribute(
+    "href",
+    "#skills"
+  );
+
+  const skillsSection = page.locator("#skills");
+  const skillsList = page.getByRole("list", { name: "Technical skills" });
+  const skillCards = skillsList.getByRole("article");
+
+  await expect(page.getByRole("heading", { level: 2, name: "Skills" })).toBeVisible();
+  await expect(skillsList).toBeVisible();
+  expect(await skillCards.count()).toBeGreaterThanOrEqual(5);
+  await expect(skillsSection).toContainText("TypeScript");
+  await expect(skillsSection).toContainText("AWS");
+  await expect(skillsSection).not.toContainText("0410 966 572");
+});
+
+test("header résumé link opens a printable résumé with experience and skills", async ({ page }) => {
+  await page.goto("/");
+
+  const resumeLink = page.getByRole("link", {
+    name: "Open the printable résumé for Michael Baker-Tong",
+  });
+
+  await expect(resumeLink).toHaveAttribute("href", "/resume");
+  await resumeLink.click();
+
+  await expect(page).toHaveURL(/\/resume$/);
+  await expect(page.getByRole("heading", { level: 1, name: "Michael Baker-Tong" })).toBeVisible();
+  await expect(page.getByText("Technical Skills", { exact: true })).toBeVisible();
+
+  const resumeExperience = page.getByRole("list", { name: "Work experience" });
+
+  await expect(resumeExperience).toBeVisible();
+  await expect(resumeExperience).toContainText("Senior Software Engineer — Faethm by Pearson");
+  await expect(page.locator("#highlights")).toHaveCount(0);
+  await expect(page.locator("#contact")).toHaveCount(0);
 });

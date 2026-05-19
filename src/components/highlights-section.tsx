@@ -27,17 +27,6 @@ export function HighlightsSection() {
                     </h3>
                     <p className="highlights-card__summary">{highlight.description.text}</p>
                   </div>
-
-                  <div className="highlights-card__keywords-block">
-                    <p className="project-card__detail-label">Verified keywords</p>
-                    <ul aria-label={`${highlight.title} keywords`} className="highlights-card__keyword-list">
-                      {highlight.keywords.map((keyword) => (
-                        <li className="highlights-card__keyword" key={keyword.id}>
-                          {keyword.text}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
                 </article>
               </li>
             );

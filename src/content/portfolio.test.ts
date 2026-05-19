@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  RESUME_PDF_PATH,
   claimSourceMatrix,
   contact,
   education,
@@ -9,6 +10,7 @@ import {
   portfolioContent,
   selectedWork,
   sourceCatalog,
+  technicalSkills,
   workExperience,
 } from "@/content/portfolio";
 
@@ -165,5 +167,48 @@ describe("portfolio content", () => {
       period: "2014–2017",
     });
     expect(portfolioContent).not.toHaveProperty("educationSection");
+  });
+
+  it("points the résumé source at the hosted printable résumé route, not a local file path", () => {
+    expect(RESUME_PDF_PATH).toBe("/resume");
+    expect(RESUME_PDF_PATH).not.toMatch(/^[A-Za-z]:\\|^\/Users\//);
+    expect(sourceCatalog.resumePdf.href).toBe(RESUME_PDF_PATH);
+  });
+
+  it("gives every role a company context line and a concrete tech stack", () => {
+    for (const role of workExperience) {
+      expect(role.context.trim().length).toBeGreaterThan(20);
+      expect(role.stack.length).toBeGreaterThanOrEqual(5);
+
+      for (const tech of role.stack) {
+        expect(tech.trim().length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("exposes a categorized technical skills taxonomy with concrete entries", () => {
+    expect(technicalSkills.length).toBeGreaterThanOrEqual(5);
+    expect(portfolioContent.technicalSkills).toBe(technicalSkills);
+
+    const labels = technicalSkills.map((group) => group.label);
+
+    expect(new Set(labels).size).toBe(labels.length);
+
+    for (const group of technicalSkills) {
+      expect(group.label.trim().length).toBeGreaterThan(0);
+      expect(group.caption.trim().length).toBeGreaterThan(10);
+      expect(group.skills.length).toBeGreaterThanOrEqual(4);
+      expect(new Set(group.skills).size).toBe(group.skills.length);
+    }
+  });
+
+  it("adds recruiter-facing location and availability to the hero without leaking private contact details", () => {
+    expect(hero.location.trim().length).toBeGreaterThan(0);
+    expect(hero.availability.trim().length).toBeGreaterThan(0);
+
+    const heroOutput = `${hero.location} ${hero.availability}`;
+
+    expect(heroOutput).not.toMatch(/0410\s?966\s?572/);
+    expect(heroOutput).not.toMatch(/@/);
   });
 });

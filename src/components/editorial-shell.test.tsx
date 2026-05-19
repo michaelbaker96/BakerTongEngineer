@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import Home from "@/app/page";
+import Home from "@/app/(site)/page";
 import { EditorialShell } from "@/components/editorial-shell";
 import { contact, education, engineeringHighlights, workExperience } from "@/content/portfolio";
 
@@ -80,7 +80,7 @@ describe("EditorialShell", () => {
     expect(within(contactSection).queryByRole("link", { name: "Resume" })).not.toBeInTheDocument();
   });
 
-  it("renders the highlights anchor as five ordered capability pillars with bounded keywords", () => {
+  it("renders the highlights anchor as five ordered capability pillars without a keywords block", () => {
     render(
       <EditorialShell>
         <Home />
@@ -100,16 +100,13 @@ describe("EditorialShell", () => {
         .map((heading) => heading.textContent)
     ).toEqual(engineeringHighlights.map((highlight) => highlight.title));
 
+    expect(within(highlightsSection).queryByText("Verified keywords")).not.toBeInTheDocument();
+
     for (const [index, card] of highlightCards.entries()) {
       const content = engineeringHighlights[index];
-      const keywordList = within(card).getByRole("list", {
-        name: `${content.title} keywords`,
-      });
-      const keywordItems = within(keywordList).getAllByRole("listitem");
 
       expect(within(card).getByText(content.description.text)).toBeInTheDocument();
-      expect(keywordItems.length).toBeGreaterThanOrEqual(2);
-      expect(keywordItems.length).toBeLessThanOrEqual(4);
+      expect(within(card).queryByRole("list")).not.toBeInTheDocument();
       expect(card).not.toHaveTextContent(/Certification|Award|0410966572|0410 966 572/i);
     }
   });

@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import Home from "@/app/page";
+import Home from "@/app/(site)/page";
 import { contact, selectedWork, sourceCatalog } from "@/content/portfolio";
 
 describe("Home", () => {
