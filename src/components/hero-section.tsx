@@ -8,6 +8,11 @@ export function HeroSection() {
         <h1 className="hero-section__heading" id="hero-heading">
           {hero.brand.text}
         </h1>
+        <p className="hero-section__meta">
+          <span className="hero-section__meta-item">{hero.location}</span>
+          <span aria-hidden="true" className="hero-section__meta-dot" />
+          <span className="hero-section__meta-item">{hero.availability}</span>
+        </p>
         <p className="hero-section__summary">{hero.summary.text}</p>
 
         <nav aria-label="Hero calls to action" className="hero-section__actions">

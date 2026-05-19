@@ -8,11 +8,15 @@ GitHub repository: <https://github.com/michaelbaker96/BakerTongEngineer>
 
 The current public page includes these implemented sections:
 
-- Hero
+- Hero (with location and availability)
 - Selected Work
 - Engineering Highlights
-- Work Experience
+- Technical Skills (categorized toolkit)
+- Work Experience (with company context and per-role tech stacks)
 - Contact
+
+A standalone, print-optimized résumé lives at `/resume` (linked from the header)
+and uses `@media print` styles so it can be saved straight to PDF.
 
 ## Stack
 

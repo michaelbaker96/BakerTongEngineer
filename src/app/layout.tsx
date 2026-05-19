@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Public_Sans } from "next/font/google";
 
-import { EditorialShell } from "@/components/editorial-shell";
-
 import "./globals.css";
 
 const fallbackMetadataBaseUrl = "http://localhost:3000";
@@ -67,9 +65,7 @@ export default function RootLayout({
       lang="en"
       className={`${publicSans.variable} ${cormorantGaramond.variable} h-full antialiased`}
     >
-      <body className="editorial-body min-h-full antialiased">
-        <EditorialShell>{children}</EditorialShell>
-      </body>
+      <body className="editorial-body min-h-full antialiased">{children}</body>
     </html>
   );
 }

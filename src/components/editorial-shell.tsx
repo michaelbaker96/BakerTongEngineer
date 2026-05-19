@@ -1,9 +1,11 @@
 import { HighlightsSection } from "@/components/highlights-section";
-import { contact, education, workExperience } from "@/content/portfolio";
+import { SkillsSection } from "@/components/skills-section";
+import { RESUME_PDF_PATH, contact, education, workExperience } from "@/content/portfolio";
 
 const sectionLinks = [
   { href: "#work", label: "Work" },
   { href: "#highlights", label: "Highlights" },
+  { href: "#skills", label: "Skills" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ];
@@ -38,6 +40,15 @@ export function EditorialShell({ children }: EditorialShellProps) {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  aria-label="Open the printable résumé for Michael Baker-Tong"
+                  className="editorial-nav__resume"
+                  href={RESUME_PDF_PATH}
+                >
+                  Résumé
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -52,6 +63,8 @@ export function EditorialShell({ children }: EditorialShellProps) {
         </section>
 
         <HighlightsSection />
+
+        <SkillsSection />
 
         <section aria-labelledby="experience-heading" className="editorial-section experience-section" id="experience">
           <div className="editorial-frame experience-section__frame">
@@ -74,9 +87,10 @@ export function EditorialShell({ children }: EditorialShellProps) {
                     <article aria-labelledby={titleId} className="experience-card">
                       <div className="experience-card__content">
                         <div className="experience-card__heading-block">
-                          <p className="experience-card__period">{role.period}</p>
-                          <h3 className="experience-card__company" id={titleId}>{role.company}</h3>
-                          <p className="experience-card__title-label">{role.title}</p>
+                          <h3 className="experience-card__company" id={titleId}>
+                            {role.title} — {role.company} ({role.period})
+                          </h3>
+                          <p className="experience-card__context">{role.context}</p>
                         </div>
                         <p className="experience-card__summary">{role.summary.text}</p>
                       </div>
@@ -88,6 +102,20 @@ export function EditorialShell({ children }: EditorialShellProps) {
                           </li>
                         ))}
                       </ul>
+
+                      <div className="experience-card__stack">
+                        <p className="project-card__detail-label">Tech stack</p>
+                        <ul
+                          aria-label={`${role.company} tech stack`}
+                          className="experience-card__stack-list"
+                        >
+                          {role.stack.map((tech) => (
+                            <li className="experience-card__stack-item" key={tech}>
+                              {tech}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </article>
                   </li>
                 );
